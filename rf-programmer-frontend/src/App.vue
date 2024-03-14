@@ -19,7 +19,7 @@ const toggleInstructions = ref(false)
       class="flex flex-col w-full max-w-md gap-3 p-6 mt-10 rounded-xl bg-neutral-700">
       <div class="text-xl font-semibold">RF Transmit Key</div>
       <input type="text" placeholder="696900" v-model="transmitKey"
-        class="h-12 px-3 font-semibold border rounded-md bg-neutral-800 bg-opacity-60 border-cyan-400">
+        class="h-12 px-3 font-semibold border-2 rounded-md bg-neutral-800 bg-opacity-60 border-cyan-400">
       <div class="flex justify-between w-full gap-2">
         <button @click="getRandomNumber(11111215, 16777215)"
           class="w-full px-5 py-2 font-semibold duration-200 border-2 rounded-md min-h-12 bg-sky-600 border-sky-700 bg-opacity-30 hover:bg-sky-700">Generate
