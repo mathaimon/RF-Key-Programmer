@@ -5,12 +5,8 @@
 #include <WiFi.h>
 
 #include "captive_handler.h"
+#include "config.h"
 #include "webpage.h"
-
-// Replace with your network credentials
-const char* ssid = "RF Key Programmer";
-const char* password = "12345678";
-IPAddress apIP(4, 3, 2, 1);
 
 DNSServer dnsServer;
 AsyncWebServer server(80);
