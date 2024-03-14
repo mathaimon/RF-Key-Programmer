@@ -34,6 +34,6 @@ output_filename = os.path.join('../src','webpage.h')
 with open(output_filename, 'w',encoding="utf-8") as f_out:
     f_out.write("#include <Arduino.h>\n\n")
     f_out.write(f"const size_t gzip_html_length = {out_byte_length};\n")
-    f_out.write(f"const char webpage_html[] PROGMEM = {{{out_byte_array}}};\n")
+    f_out.write(f"const uint8_t webpage_html[] PROGMEM = {{{out_byte_array}}};\n")
 
 print("The contents and length have been written to webpage.h.")
