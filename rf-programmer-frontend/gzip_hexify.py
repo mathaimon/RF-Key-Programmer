@@ -4,6 +4,7 @@ Program to gzip the final html file to webpage.h file
 import binascii
 import gzip
 import os
+import subprocess
 
 def compress_and_convert_to_byte_array(filename):
     """
@@ -24,6 +25,7 @@ def compress_and_convert_to_byte_array(filename):
 
     return formatted_byte_array, len(byte_array) // 2 # Divide by 2 to get the number of bytes
 
+subprocess.run("pnpm build",shell=True, universal_newlines=True, check=False)
 html_filename = os.path.join('./dist', 'index.html')
 out_byte_array, out_byte_length = compress_and_convert_to_byte_array(html_filename)
 
