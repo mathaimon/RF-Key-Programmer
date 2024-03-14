@@ -32,6 +32,7 @@ out_byte_array, out_byte_length = compress_and_convert_to_byte_array(html_filena
 output_filename = os.path.join('../src','webpage.h')
 
 with open(output_filename, 'w',encoding="utf-8") as f_out:
+    f_out.write("#pragma once\n")
     f_out.write("#include <Arduino.h>\n\n")
     f_out.write(f"const size_t gzip_html_length = {out_byte_length};\n")
     f_out.write(f"const uint8_t webpage_html[] PROGMEM = {{{out_byte_array}}};\n")
