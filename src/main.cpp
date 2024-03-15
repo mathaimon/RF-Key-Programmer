@@ -8,6 +8,8 @@
 
 #include "captive_handler.h"
 #include "config.h"
+#include "soc/rtc_cntl_reg.h"
+#include "soc/soc.h"
 #include "webpage.h"
 
 DNSServer dnsServer;
@@ -21,6 +23,7 @@ unsigned long rfKey = 0;
 unsigned long lastRfTransmitMillis = 0;
 
 void setup() {
+  WRITE_PERI_REG(RTC_CNTL_BROWN_OUT_REG, 0);  // Disable brownout detector
   Serial.begin(115200);
   Serial.print("Starting ");
   Serial.println(devName);
