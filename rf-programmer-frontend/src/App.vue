@@ -14,12 +14,7 @@ function getRandomNumber(min, max) {
 let socket = null
 
 onMounted(() => {
-  if (window.location.hostname === "localhost") {
-    socket = new WebSocket("ws://4.3.2.1/ws")
-  } else {
-    socket = new WebSocket(`ws://${window.location.host}/ws`)
-  }
-
+  socket = new WebSocket("ws://4.3.2.1/ws")
   socket.addEventListener("open", () => {
     console.log("Connected to WebSocket")
   })
@@ -85,9 +80,12 @@ function stopTransmission() {
         </div>
         <ul v-if="toggleInstructions" class="mt-3 ml-4 text-sm list-decimal list-outside">
           <li>Press both A and B buttons together for 3 seconds or until the light flashes.</li>
-          <li>While holding the A button pressed press the B button thrice & release all buttons.</li>
-          <li>Start transmission of new key.</li>
-          <li>Press the key you want to program and move the remote near to the antenna of the RF Transmitter.</li>
+          <li>While keeping the A button pressed, press the B button thrice. The light will start flashing.</li>
+          <li>Release all buttons.</li>
+          <li>Start transmission of new key from the UI.</li>
+          <li>Press the button on the remote you want to program and move the remote closer to the antenna of the RF
+            Transmitter.</li>
+          <li>Once the light flashes rapidly the key is programmed.</li>
         </ul>
       </div>
     </div>

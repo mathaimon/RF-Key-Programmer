@@ -35,7 +35,8 @@ void setup() {
   Serial.print("Current IP : ");
   Serial.println(WiFi.softAPIP());
 
-  dnsServer.setTTL(300);
+  //   dnsServer.setTTL(300);
+  dnsServer.setErrorReplyCode(DNSReplyCode::NoError);
   dnsServer.start(53, "*", WiFi.softAPIP());
 
   // Route for root / web page

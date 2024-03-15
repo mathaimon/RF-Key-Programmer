@@ -14,9 +14,8 @@ class CaptiveRequestHandler : public AsyncWebHandler {
   }
 
   void handleRequest(AsyncWebServerRequest *request) {
-    AsyncWebServerResponse *response = request->beginResponse_P(
-        200, "text/html", webpage_html, gzip_html_length);
-    response->addHeader("Content-Encoding", "gzip");
+    AsyncWebServerResponse *response = request->beginResponse(302);
+    response->addHeader(F("Location"), F("http://4.3.2.1"));
     request->send(response);
   }
 };
