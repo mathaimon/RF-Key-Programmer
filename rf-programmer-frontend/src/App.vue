@@ -1,15 +1,51 @@
 <script setup>
-import { ref } from 'vue';
+import { onMounted, ref } from 'vue';
 import { vAutoAnimate } from '@formkit/auto-animate'
 
 const isToggled = ref(false)
+const toggleInstructions = ref(false)
+
 const transmitKey = ref()
+const recvMsg = ref({})
 
 function getRandomNumber(min, max) {
   transmitKey.value = Math.floor(Math.random() * (max - min + 1)) + min;
 }
+let socket = null
 
-const toggleInstructions = ref(false)
+onMounted(() => {
+  if (window.location.hostname === "localhost") {
+    socket = new WebSocket("ws://4.3.2.1/ws")
+  } else {
+    socket = new WebSocket(`ws://${window.location.host}/ws`)
+  }
+
+  socket.addEventListener("open", () => {
+    console.log("Connected to WebSocket")
+  })
+
+  socket.addEventListener("message", (event) => {
+    recvMsg.value = JSON.parse(event.data)
+    isToggled.value = recvMsg.value.txStatus
+  })
+})
+
+function startTransmission() {
+  var txMessage = JSON.stringify({
+    txKey: transmitKey.value,
+    tx: true
+  })
+  console.log(txMessage)
+  socket.send(txMessage)
+}
+
+function stopTransmission() {
+  var txMessage = JSON.stringify({
+    tx: false
+  })
+  console.log(txMessage)
+  socket.send(txMessage)
+}
 </script>
 
 <template>
@@ -25,7 +61,7 @@ const toggleInstructions = ref(false)
           class="w-full px-5 py-2 font-semibold duration-200 border-2 rounded-md min-h-12 bg-sky-600 border-sky-700 bg-opacity-30 hover:bg-sky-700">Generate
           Random
           Key</button>
-        <button @click="isToggled = true"
+        <button @click="startTransmission"
           class="w-full px-5 py-2 font-semibold duration-200 bg-teal-600 border-2 border-teal-700 rounded-md min-h-12 bg-opacity-30 hover:bg-teal-700">Start
           Transmission</button>
       </div>
@@ -35,9 +71,9 @@ const toggleInstructions = ref(false)
           </span><span class="w-full h-full border-2 rounded-full anima bg-rose-600 bg-opacity-90 border-rose-700">
           </span>
         </div>
-        <div>Transmitting Key : <span class="font-semibold">128754</span></div>
+        <div>Transmitting Key : <span class="font-semibold">{{ recvMsg.currentTxKey }}</span></div>
       </div>
-      <button v-if="isToggled" @click="isToggled = false"
+      <button v-if="isToggled" @click="stopTransmission"
         class="px-5 py-2 mx-auto font-semibold duration-200 border-2 rounded-md min-h-12 bg-opacity-30 bg-rose-600 hover:bg-rose-700 border-rose-700">Stop
         Transmission</button>
       <div v-auto-animate class="p-3 rounded-md bg-neutral-800 bg-opacity-60">
